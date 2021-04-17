@@ -44,8 +44,7 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         rb.velocity = new Vector2(Input.GetAxis("Horizontal") * speed, rb.velocity.y);
-        //if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-            //rb.AddForce(transform.up * jumpheight, ForceMode2D.Impulse);
+        
     }
     void Flip()
     {
@@ -84,7 +83,6 @@ public class Player : MonoBehaviour
             GetComponent<SpriteRenderer>().color = new Color(1f, GetComponent<SpriteRenderer>().color.g - 0.04f, GetComponent<SpriteRenderer>().color.b - 0.04f);
         else
             GetComponent<SpriteRenderer>().color = new Color(1f, GetComponent<SpriteRenderer>().color.g + 0.04f, GetComponent<SpriteRenderer>().color.b + 0.04f);
-
         if (GetComponent<SpriteRenderer>().color.g == 1f)
             StopCoroutine(OnHit());
         if (GetComponent<SpriteRenderer>().color.g <= 0)

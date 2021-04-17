@@ -12,5 +12,4 @@ public class Enemy : MonoBehaviour
             collision.gameObject.GetComponent<Rigidbody2D>().AddForce(transform.up * 8f, ForceMode2D.Impulse);
         }
     }
-    
 }
