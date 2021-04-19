@@ -14,6 +14,8 @@ public class Player : MonoBehaviour
     int maxHp = 3;
     bool isHit = false;
     public ResetLevel main;
+    public bool inWater = false;
+    bool isClimbing = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,22 +27,32 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        CheckGround();
-        if (Input.GetAxis("Horizontal") == 0 && (isGrounded))
+        if (inWater && !isClimbing)
         {
-            anim.SetInteger("State", 1);
+            anim.SetInteger("State", 4);
+            isGrounded = false;
+            if (Input.GetAxis("Horizontal") != 0)
+                Flip();
         }
         else
         {
-            Flip();
-            if (isGrounded)
-                anim.SetInteger("State", 2);
-        }
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+            CheckGround();
+            if (Input.GetAxis("Horizontal") == 0 && (isGrounded) && !isClimbing)
+            {
+                anim.SetInteger("State", 1);
+            }
+            else
+            {
+                Flip();
+                if (isGrounded && !isClimbing)
+                    anim.SetInteger("State", 2);
+            }
+            if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
                 rb.AddForce(transform.up * jumpheight, ForceMode2D.Impulse);
             
+        }
     }
+   
     void FixedUpdate()
     {
         rb.velocity = new Vector2(Input.GetAxis("Horizontal") * speed, rb.velocity.y);
@@ -57,7 +69,7 @@ public class Player : MonoBehaviour
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, 0.2f);
         isGrounded = colliders.Length > 1;
-        if (!isGrounded)
+        if (!isGrounded && !isClimbing)
             anim.SetInteger("State", 3);
     }
     public void RecountHp(int deltaHp)
@@ -93,5 +105,31 @@ public class Player : MonoBehaviour
     void GameOver()
     {
         main.GetComponent<ResetLevel>().GameOver();
+    }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Ladder")
+        {
+            isClimbing = true;
+            rb.bodyType = RigidbodyType2D.Kinematic;
+            if (Input.GetAxis("Vertical") == 0)
+            {
+                anim.SetInteger("State", 5);
+            }else
+            {
+                anim.SetInteger("State", 6);
+                transform.Translate(Vector3.up * Input.GetAxis("Vertical") * speed * 0.5f * Time.deltaTime);
+            }
+            
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Ladder")
+        {
+            isClimbing = false;
+            rb.bodyType = RigidbodyType2D.Dynamic;
+
+        }
     }
 }
