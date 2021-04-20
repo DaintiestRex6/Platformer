@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     public ResetLevel main;
     public bool inWater = false;
     bool isClimbing = false;
+    int coins = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -82,7 +83,10 @@ public class Player : MonoBehaviour
             isHit = true;
             StartCoroutine(OnHit());
         }
-            
+        else if (curHp > maxHp){
+            curHp = maxHp;
+        }
+        print("Жизни "+ curHp);    
         if (curHp <= 0)
         {
             GetComponent<CapsuleCollider2D>().enabled = false;
@@ -130,6 +134,25 @@ public class Player : MonoBehaviour
             isClimbing = false;
             rb.bodyType = RigidbodyType2D.Dynamic;
 
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Coin")
+        {
+            Destroy(collision.gameObject);
+            coins++;
+            print("Монет " + coins);
+        }
+        if (collision.gameObject.tag == "MushroomHealth")
+        {
+            Destroy(collision.gameObject);
+            RecountHp(1);
+        }
+        if (collision.gameObject.tag == "MushroomPoison")
+        {
+            Destroy(collision.gameObject);
+            RecountHp(-1);
         }
     }
 }
