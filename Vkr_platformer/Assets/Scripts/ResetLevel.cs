@@ -47,6 +47,14 @@ public class ResetLevel : MonoBehaviour
         Time.timeScale = 0f;
         player.enabled = false;
         WinScreen.SetActive(true);
+        if (!PlayerPrefs.HasKey("Lvl") || PlayerPrefs.GetInt("Lvl") < SceneManager.GetActiveScene().buildIndex)
+            PlayerPrefs.SetInt("Lvl", SceneManager.GetActiveScene().buildIndex);
+
+        if (PlayerPrefs.HasKey("coins"))
+            PlayerPrefs.SetInt("coins", PlayerPrefs.GetInt("coins") + player.GetCoins());
+        else
+            PlayerPrefs.SetInt("coins", player.GetCoins());
+
     }
     public void Lose()
     {

@@ -441,7 +441,8 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 365474022}
   m_Father: {fileID: 1812656691}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -519,8 +520,8 @@ RectTransform:
   m_Children:
   - {fileID: 1553075260}
   - {fileID: 792811794}
-  m_Father: {fileID: 1812656691}
-  m_RootOrder: 7
+  m_Father: {fileID: 363764815}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -1558,7 +1559,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d91b1b56ef84e92459ecb9a33894af57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lvls: []
+  lvls:
+  - {fileID: 1962150778}
+  - {fileID: 1128026817}
+  - {fileID: 2079989524}
+  coinText: {fileID: 1553075261}
 --- !u!81 &1336159634
 AudioListener:
   m_ObjectHideFlags: 0
@@ -2171,7 +2176,6 @@ RectTransform:
   - {fileID: 1125424539}
   - {fileID: 1169649417}
   - {fileID: 1934992556}
-  - {fileID: 365474022}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
